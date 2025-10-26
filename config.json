@@ -1,0 +1,8 @@
+{
+    "package_name": "package",
+    "repository_url": "https://example.com/repo",
+    "test_mode": true,
+    "version": "1.0.0",
+    "max_depth": 3,
+    "filter_substring": "test"
+}
