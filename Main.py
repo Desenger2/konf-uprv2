@@ -1,5 +1,7 @@
 import json
 import sys
+import urllib.request
+import urllib.error
 
 class Config:
     def __init__(self):
@@ -51,6 +53,22 @@ class Config:
         except Exception as e:
             raise Exception(f"{str(e)}")
 
+def get_package_dependencies(package_name, version, repository_url):
+    try:
+        url = f"{repository_url}/{package_name}/{version}/json"
+        with urllib.request.urlopen(url) as response:
+            data = json.loads(response.read().decode())
+        
+        dependencies = []
+        if 'info' in data and 'requires_dist' in data['info']:
+            dependencies = data['info']['requires_dist'] or []
+        
+        return dependencies
+    except urllib.error.URLError:
+        raise Exception("Ошибка подключения к репозиторию")
+    except Exception as e:
+        raise Exception(f"Ошибка получения зависимостей: {str(e)}")
+
 def main():
     if len(sys.argv) != 2:
         print("Для конфигурации введите: python Main.py <файл_конфигурации>")
@@ -63,13 +81,19 @@ def main():
         print(f"Ошибка: {str(e)}")
         sys.exit(1)
     
-    print("Параметры конфигурации:")
-    print(f"package_name: {config.package_name}")
-    print(f"repository_url: {config.repository_url}")
-    print(f"test_mode: {config.test_mode}")
-    print(f"version: {config.version}")
-    print(f"max_depth: {config.max_depth}")
-    print(f"filter_substring: {config.filter_substring}")
+    try:
+        dependencies = get_package_dependencies(
+            config.package_name, 
+            config.version, 
+            config.repository_url
+        )
+        
+        print("Прямые зависимости:")
+        for dep in dependencies:
+            print(f"- {dep}")
+            
+    except Exception as e:
+        print(f"Ошибка: {str(e)}")
 
 if __name__ == "__main__":
     main()
