@@ -1,6 +1,6 @@
 {
     "package_name": "package",
-    "repository_url": "https://example.com/repo",
+    "repository_url": "https://test_url/test_repo",
     "test_mode": true,
     "version": "1.0.0",
     "max_depth": 3,
