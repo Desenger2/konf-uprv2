@@ -1,0 +1,8 @@
+{
+    "package_name": "A",
+    "repository_url": "test_repo.json",
+    "test_mode": true,
+    "version": "1.0.0",
+    "max_depth": 4,
+    "filter_substring": ""
+}

@@ -3,6 +3,6 @@
     "repository_url": "https://pypi.org/pypi",
     "test_mode": false,
     "version": "2.31.0",
-    "max_depth": 3,
+    "max_depth": 1,
     "filter_substring": ""
 }
